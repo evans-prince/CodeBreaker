@@ -26,7 +26,7 @@ struct MatchMarkers: View {
             ForEach(Array(stride(from: 0, to: pegCount, by: 2)), id: \.self) { index in
                 VStack{
                     matchMarker(peg: index)
-                    if(index+1 < pegCount) {
+                    if(index+1 < 6) {
                         matchMarker(peg: index+1)
                     }
                 }
@@ -45,6 +45,7 @@ struct MatchMarkers: View {
 }
 
 
+/// Puts dummy pegs  with matchmarkers to look good 
 struct MatchMarkersPreview: View {
     let matchesArr : [Match]
     var body : some View {
