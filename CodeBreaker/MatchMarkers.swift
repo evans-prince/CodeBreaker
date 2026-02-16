@@ -16,15 +16,17 @@ enum Match{
 
 struct MatchMarkers: View {
     var matches: [Match]
+    var pegCount: Int = 4
+    
     //        let exactCount: Int = matches.count(where : {match in match == .exact})
     var exactCount: Int { matches.count{$0 == .exact}}
     var foundCount: Int { matches.count{$0 != .nomatch}}
     var body: some View {
         HStack {
-            ForEach(Array(stride(from: 0, to: foundCount, by: 2)), id: \.self) { index in
+            ForEach(Array(stride(from: 0, to: pegCount, by: 2)), id: \.self) { index in
                 VStack{
                     matchMarker(peg: index)
-                    if(index+1 < 6) {
+                    if(index+1 < pegCount) {
                         matchMarker(peg: index+1)
                     }
                 }
@@ -72,6 +74,7 @@ struct MatchMarkersPreview: View {
         MatchMarkersPreview(matchesArr: [.exact , .exact, .exact, .inexact, .inexact, .inexact])
         MatchMarkersPreview(matchesArr: [.inexact , .exact, .exact, .inexact, .inexact])
         MatchMarkersPreview(matchesArr: [.exact, .nomatch, .inexact, .nomatch, .inexact])
+//        MatchMarkers(matches:[.exact , .inexact , .inexact])
     }
     .padding()
 }
