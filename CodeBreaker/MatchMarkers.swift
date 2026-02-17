@@ -15,12 +15,17 @@ enum Match{
 
 
 struct MatchMarkers: View {
-    var matches: [Match]
+    //MARK: Data In
+    let matches: [Match]
     var pegCount: Int = 4
     
     //        let exactCount: Int = matches.count(where : {match in match == .exact})
     var exactCount: Int { matches.count{$0 == .exact}}
     var foundCount: Int { matches.count{$0 != .nomatch}}
+    
+    //MARK - Body
+    
+    
     var body: some View {
         HStack {
             ForEach(Array(stride(from: 0, to: pegCount, by: 2)), id: \.self) { index in

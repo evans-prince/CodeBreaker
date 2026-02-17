@@ -64,4 +64,8 @@ extension Color {
         // If it's none of the above (or a custom color), return nil
         return nil
     }
+    
+    static func gray(_ brightness: CGFloat) -> Color {
+        return Color(hue: 148/360, saturation: 0, brightness: brightness)
+    }
 }
