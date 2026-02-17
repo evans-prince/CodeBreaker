@@ -55,7 +55,7 @@ struct CodeBreakerView: View {
             ForEach(code.pegs.indices, id: \.self) {index in
                 draw( peg: code.pegs[index])
                     .overlay {
-                        if code.pegs[index] == Code.missing {
+                        if code.pegs[index] == Code.missingPeg {
                             RoundedRectangle(cornerRadius: 10)
                                 .strokeBorder(Color.gray)
                         }
@@ -67,10 +67,14 @@ struct CodeBreakerView: View {
                         }
                     }
             }
-            MatchMarkers( matches: code.matches, pegCount: game.pegCount)
+            Rectangle().foregroundStyle(Color.clear).aspectRatio(1, contentMode: .fit)
                 .overlay {
-                    if code.kind == .guess {
-                        guessButton
+                    if let matches = code.matches {
+                        MatchMarkers( matches: matches, pegCount: game.pegCount)
+                    }else {
+                        if code.kind == .guess {
+                            guessButton
+                        }
                     }
                 }
         }
