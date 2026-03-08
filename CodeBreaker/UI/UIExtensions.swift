@@ -1,11 +1,37 @@
 //
-//  SwiftUIView.swift
+//  UIExtensions.swift
 //  CodeBreaker
 //
 //  Created by PRINCE  on 2/16/26.
 //
 
 import SwiftUI
+
+
+extension AnyTransition {
+    static let pegChooser = AnyTransition.offset(x: 0, y: 200)
+    
+    static func attempt(_ isOver: Bool) -> AnyTransition {
+        AnyTransition.asymmetric(
+            insertion: isOver ? .identity : .move(edge: .top),
+            removal: .move(edge: .trailing))
+    }
+}
+
+extension Animation {
+    static let codeBreaker = Animation.bouncy
+    static let guess = Animation.codeBreaker
+    static let restart = Animation.codeBreaker
+    static let selection = Animation.codeBreaker
+}
+
+extension View {
+    func flexibleSystemFont(minimum: CGFloat = 8, maximum: CGFloat = 80) -> some View {
+        self
+            .font(.system(size: maximum))
+            .minimumScaleFactor(minimum/maximum)
+    }
+}
 
 extension Color {
     // This is a "failable initializer" (init?).

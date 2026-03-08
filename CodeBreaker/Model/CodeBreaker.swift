@@ -96,7 +96,6 @@ struct CodeBreaker {
         masterCode = Code(pegCount: pegCount, kind: .master(isHidden: true))
         guess = Code(pegCount: pegCount, kind: .guess)
         masterCode.randomize(from: self.pegChoices)
-        print(masterCode)
     }
     
     var isOver: Bool {

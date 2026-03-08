@@ -15,8 +15,11 @@ struct CodeView<AncillaryView>: View  where AncillaryView: View{
     @Binding var selection: Int
     // var _selection: Binding<Int> is there we just don't see it
     
+    // MARK: Data (sort of ) In function
     @ViewBuilder let ancillaryView: () -> AncillaryView
     
+    // MARK: Data Owned by Me
+    @Namespace private var selectionNamespace
     init(
         code: Code,
         selection: Binding<Int> = .constant(-1),
@@ -34,14 +37,23 @@ struct CodeView<AncillaryView>: View  where AncillaryView: View{
             ForEach(code.pegs.indices, id: \.self) {index in
                 PegView(peg: code.pegs[index])
                     .padding(Selection.border)
-                    .background {
-                        if selection == index , code.kind == .guess {
-                            Selection.shape
-                                .foregroundColor(Selection.color)
+                    .background { // selection background
+                        Group {
+                            if selection == index , code.kind == .guess {
+                                Selection.shape
+                                    .foregroundColor(Selection.color)
+                                    .matchedGeometryEffect(id: "selection", in: selectionNamespace)
+                            }
                         }
+                        .animation(.selection, value: selection)
                     }
-                    .overlay {
+                    .overlay { // hidden code obscuring
                         Selection.shape.foregroundStyle(code.isHidden ? Color.gray : .clear)
+                            .transaction { transaction in
+                                if code.isHidden {
+                                    transaction.animation = nil
+                                }
+                            }
                     }
                     .onTapGesture {
                         if code.kind == .guess {
