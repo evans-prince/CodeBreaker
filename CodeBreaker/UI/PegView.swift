@@ -17,12 +17,6 @@ struct PegView: View {
     
     var body: some View {
         draw(peg)
-            .overlay {
-                if peg == Code.missingPeg {
-                    pegShape
-                        .strokeBorder(Color.gray)
-                }
-            }
             .contentShape(pegShape)
     }
     
