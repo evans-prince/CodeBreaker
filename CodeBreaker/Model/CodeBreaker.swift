@@ -20,10 +20,10 @@ struct CodeBreaker {
     static let themes: [String: [Peg]] = [
 
         // --- COLOR THEMES ---
-        "Standard Colors 1": [
+        "Std Colors 1": [
             "red", "green", "blue", "yellow", "orange", "black"
         ],
-        "Standard Colors 2": [
+        "Std Colors 2": [
             "white", "brown", "pink", "cyan", "gray", "purple"
         ],
 
@@ -140,6 +140,7 @@ struct CodeBreaker {
         self.currentThemeName = randomThemeName
         self.pegChoices = CodeBreaker.themes[randomThemeName]!
         
+        masterCode.kind = .master(isHidden: true)
         masterCode = Code(pegCount: pegCount, kind: .master(isHidden: true))
         masterCode.randomize(from: pegChoices)
         guess = Code(pegCount: pegCount, kind: .guess)

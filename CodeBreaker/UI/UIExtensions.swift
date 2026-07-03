@@ -10,7 +10,8 @@ import SwiftUI
 
 extension AnyTransition {
     static let pegChooser = AnyTransition.offset(x: 0, y: 200)
-    
+    static let themeName = AnyTransition.scale.combined(with: .opacity)
+
     static func attempt(_ isOver: Bool) -> AnyTransition {
         AnyTransition.asymmetric(
             insertion: isOver ? .identity : .move(edge: .top),
@@ -19,7 +20,7 @@ extension AnyTransition {
 }
 
 extension Animation {
-    static let codeBreaker = Animation.bouncy
+    static let codeBreaker = Animation.easeInOut(duration: 3)
     static let guess = Animation.codeBreaker
     static let restart = Animation.codeBreaker
     static let selection = Animation.codeBreaker

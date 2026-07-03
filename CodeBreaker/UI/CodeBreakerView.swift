@@ -14,13 +14,19 @@ struct CodeBreakerView: View {
     @State private var selection: Int = 0
     @State private var restarting = false
     @State private var hideMostRecentMarkers = false
+    @State private var spinDegrees = 0.0
     
     //MARK: - Body
     
     
     var body: some View {
         VStack{
-            themeTitle
+            HStack{
+                themeTitle
+                Spacer()
+                restartButton
+                    .rotationEffect(.degrees(spinDegrees))
+            }
             CodeView(code: game.masterCode)
             ScrollView{
                 if !game.isOver || restarting {
@@ -40,11 +46,10 @@ struct CodeBreakerView: View {
                     .transition(AnyTransition.attempt(game.isOver))
                 }
             }
-            if !game.isOver{
+            if !game.isOver && !restarting {
                 PegChooser(choices: game.pegChoices, onChoose: changePegAtSelection )
                     .transition(.pegChooser) // origin -> top left & down ->y +ve
             }
-            restartButton
         }
         .padding()
     }
@@ -59,18 +64,24 @@ struct CodeBreakerView: View {
             .font(.system(size: 40))
             .minimumScaleFactor(20/40)
             .foregroundStyle(.primary)
+            .animation(nil, value: game.currentThemeName)
+            .opacity(restarting ? 0 : 1)
+            .scaleEffect(restarting ? 0.1 : 1)
     }
     var restartButton: some View {
         Button("Restart", systemImage: "arrow.circlepath", action: restart)
             .font(.system(size: 30))
             .minimumScaleFactor(0.1)
+            .labelStyle(.iconOnly)
     }
     
     func restart() {
         withAnimation(.restart){
+            spinDegrees -= 180
             restarting = true
         } completion: {
             withAnimation(.restart){
+                spinDegrees -= 180
                 game.restartGame()
                 selection = 0
                 restarting = false
