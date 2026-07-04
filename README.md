@@ -4,6 +4,12 @@ A native SwiftUI Mastermind clone, built as a coursework project (Stanford CS193
 
 **Status: work in progress.** The core game loop is playable, but this isn't a finished, polished app — expect rough edges.
 
+## Demo
+
+![CodeBreaker gameplay: touring the Colors, Food, Sports, Faces, and Flags themes](codebreaker-demo.gif)
+
+![CodeBreaker screenshot](codebreaker-screenshot.png)
+
 ## What's here
 
 - Classic Mastermind gameplay: guess a hidden code, get peg-match feedback, repeat until solved.
